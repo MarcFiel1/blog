@@ -36,7 +36,7 @@ class PostController extends Controller
         $user = Auth::user();
 
         $this->autorize('create');
-        
+        return view('posts');
     }
 
     /**
@@ -56,7 +56,7 @@ class PostController extends Controller
 
         $post->save();
 
-
+        return back();
     }
 
     /**
@@ -67,7 +67,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        $this->authorize('view', $post);
+
+        return back();
     }
 
     /**
@@ -76,15 +79,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $validateData=$request->validate([
-            'title' => 'string|unique:posts|max:90',
-            'content' => 'string'
-
-        ]);
-        $post->update($validateData);
-        return back();
+        
+        
+        
+        return view('posts.edit', ['post'=> $post]);
     }
 
     /**
@@ -94,7 +94,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
         $validateData=$request->validate([
             'title' => 'string|unique:posts|max:90',
@@ -112,8 +112,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return back();
     }
 }

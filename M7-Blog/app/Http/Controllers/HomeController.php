@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
+use App\Role;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -26,9 +28,15 @@ class HomeController extends Controller
     public function index()
     {
         $user=Auth::user();
-        $posts=$user->posts;
+        
         //ddd($posts);
+         if ($user->isAdmin()){
+             $posts=Post::all();
+        }
+        else{
+            $posts=$user->posts;
+        }
         //$posts=Post::all();
-    return view('home',compact('posts'));
+    return view('home', compact('posts')); //se cogen todos los posts del usuario para que se muestren en el home.blade
     }
 }

@@ -20,14 +20,14 @@ class UserSeeder extends Seeder
         $user=new User;
         $user->username='User';
         $user->email='user@example.com';
-        $user->password=Hash::make('1234');
-        $user->role_id=2;/*Role::where('role','user')->first()->id;*/
+        $user->password=Hash::make('123456');
+        $user->role_id=Role::where('role','user')->first()->id;
         $user->save();
 
         $user=new User;
         $user->username='Admin';
         $user->email='admin@example.com';
-        $user->password=Hash::make('1234');
+        $user->password=Hash::make('123456');
         $user->role_id=Role::where('role','admin')->first()->id;
         $user->save();
     }

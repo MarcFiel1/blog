@@ -27,10 +27,19 @@
     <div class="p-2">
         
         @foreach ($posts as $post)    
-
+    
         <div>
             <h3>Title: {{$post->title}}</h3>
             {{$post->contents}}  
+        </div>
+        
+        <div style="display: flex; flex-direction:row; float:right; border-bottom:grey 1px solid";>
+            <a class="btn btn-primary" style="margin:0px 2px 5px 500px" href="{{ route('posts.edit', $post->id) }}">Edit</a> 
+        <form method="POST" action="{{route('posts.destroy', $post)}}">
+            @csrf
+            @method('DELETE')
+            <input class="btn btn-danger" type="submit" style="margin:0px 2px 5px 2px" value="Delete">
+       </form>
         </div>
         <br><h2><a>
              
